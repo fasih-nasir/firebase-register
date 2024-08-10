@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DashBoard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mooli&display=swap" rel="stylesheet">
+<style>
+    body{
+        color: white;
+        background-color: rgb(44, 44, 44);
+        font-family: "Mooli", sans-serif;
+    }    button{    font-family: "Mooli", sans-serif;
+      /* cursor:progress !important; */
+      padding: 10px;
+      color: white;
+      border-radius: 6px;
+      border: none;
+      background-color: #383838;
+      /* margin: 10px 0px; */
+
+    }
+.box{box-shadow: rgba(11, 23, 27, 0.12) 1px 5px 8px 1px, rgba(13, 13, 13, 0.32) 1px 1px 4px 2px;
+    margin: 10px 0px;
+    padding: 10px 15px;
+    border-radius: 10px;
+    /* border: 2px solid lightgrey; */
+    background-color: rgba(76, 76, 77, 0.429);
+}
+input,select{     color: rgb(230, 230, 230);
+      /* border: 3px solid rgb(45, 45, 45);;; */
+      background-color:  rgb(78, 78, 78);;
+      padding: 15px;
+border: none;
+outline: none;
+      margin: 5px 0px;box-shadow: rgba(11, 23, 27, 0.12) 1px 5px 8px 1px, rgba(13, 13, 13, 0.32) 1px 1px 4px 2px;
+      border-radius: 2px;
+    }
+    input::placeholder{
+      color: rgb(193, 193, 193);
+      font-weight: 100;
+
+    }
+    input:focus{
+      color: white;
+      background-color:  rgba(63, 63, 63, 0.516);;
+    }
+.container{
+    padding: 10px;
+}
+h5{
+    color: rgb(224, 224, 224);
+    font-weight: 200;
+    text-transform: capitalize;
+    font-size: 17px;
+}
+h3{
+    /* padding: 5px; */
+    /* background-color: rgb(44, 44, 44);; */
+}
+#main{
+    opacity: 0;
+    /* display: none; */
+}
+select{
+    padding: 16px;
+}  .highlight {
+            background-color: yellow !important;
+        }
+</style>
+</head>
+<body>
+    <div class="container">
+    <h3 class="text-center">Register</h3>
+    <form id="registrationForm" class="text-center">
+       
+        <input type="text" id="name" placeholder="Name" required>
+        <!-- <label for="contact">Contact Number:</label> -->
+        <input type="number" id="contact" placeholder="Contact Number"required>
+
+        <!-- <label for="course">Course:</label> -->
+        <!-- <input type="text" id="course" required> -->
+        <select name="" id="course">
+            <option value="">Select Course</option>
+            <option value="Web Developement">Web Developement</option>
+            <option value="App Developement">App Developement</option>
+            <option value="SAP Developement">SAP Developement</option>
+            <option value="Graphic Designing">Graphic Designing</option>
+        </select>
+
+        <!-- <label for="date">Date of Birth:</label> -->
+        <input type="date" id="date" placeholder="DOB "required>
+
+        <!-- <label for="address">Address:</label> -->
+        <input type="text" id="address" placeholder="Address "required>
+
+        <!-- <label for="email">Email:</label> -->
+        <input type="email"placeholder="Email" id="email" required>
+
+        <!-- <label for="password">Password:</label> -->
+        <input type="password" id="password" placeholder="Password" required><br><br>
+
+        <button type="button" id="regisBtn">Register</button>
+        <button type="button" id="seePro">See profile</button>
+    </form>
+</div>
+<div class="container">
+    <div class="col-12 d-flex justify-content-between align-items-center">
+        <h3>User Information</h3>
+        <input type="search" id="searchInput" placeholder="Search By Name">
+    </div>
+    <div id="main" class="d-flex flex-column justify-content-around ">
+        <!-- <h5 id="proName">Name</h5>
+        <h5 id="proemail">enail</h5>
+    <h5 id="procontact">Name</h5>
+    <h5 id="procourse">Name</h5>
+    <h5 id="prodob">Name</h5>
+    <h5 id="proaddress">Name</h5> -->
+</div>
+</div>
+    <script type="module">
+        // Import Firebase modules (for module bundlers like Webpack or Rollup)
+// app.js
+
+// app.js
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+import { getFirestore, collection, addDoc,getDocs  } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyB08gg8BvFPAKYcPtAIq6nyscEJek1ercg",
+  authDomain: "dashboard-97d59.firebaseapp.com",
+  projectId: "dashboard-97d59",
+  storageBucket: "dashboard-97d59.appspot.com",
+  messagingSenderId: "746131592139",
+  appId: "1:746131592139:web:45048840b428fa9a085c4e",
+  measurementId: "G-TK140TD71H"
+};
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth(app);
+
+
+let studentName = document.getElementById("name");
+let contactNum = document.getElementById("contact");
+let course = document.getElementById("course");
+let dateOfBirth = document.getElementById("date");
+let address = document.getElementById("address");
+let email = document.getElementById("email");
+let password = document.getElementById("password");
+let registerBtn = document.getElementById("regisBtn");
+
+registerBtn.addEventListener("click", async () => {
+    try {
+        // Register the user with Firebase Authentication
+        const userCredential = await createUserWithEmailAndPassword(auth, email.value, password.value);
+        const user = userCredential.user;
+
+        // Add user data to Firestore
+        const docRef = await addDoc(collection(db, "users"), {
+            userName: studentName.value,
+            userDOB: dateOfBirth.value,
+            userCourse: course.value,
+            userContact: contactNum.value,
+            userEmail: email.value,
+            userAddress: address.value,
+            userPassword: password.value,
+        });
+
+        alert("You are registered successfully!");
+
+        // Clear form fields after registration
+        studentName.value = "";
+        contactNum.value = "";
+        course.value = "";
+        dateOfBirth.value = "";
+        address.value = "";
+        email.value = "";
+        password.value = "";
+    } catch (error) {
+        // console.error("Error registering user: ", error);
+        alert("Error registering: " + error.message);
+    }
+});
+var main=document.getElementById("main")
+
+document.getElementById("seePro").addEventListener("click",()=>{
+    main.style.opacity="1";
+    const searchInput = document.getElementById("searchInput").value.trim().toLowerCase();
+})
+const querySnapshot = await getDocs(collection(db, "users"));
+
+// for(let i=0;i<userData.le)
+// document.getElementById("seePro").addEventListener("click",()=>{
+    querySnapshot.forEach((doc) => {
+        const userData = doc.data();
+        const userName = userData.userName;
+
+
+
+
+
+        
+        const numberOfUsers = querySnapshot.size; // Number of documents in the collection
+       
+        const isMatching = userData.userName.toLowerCase().includes(searchInput);
+
+// Highlight the search term in the name
+const highlightedName = isMatching
+    ? userName.replace(
+        new RegExp(searchInput, 'gi'),
+        (match) => `<span class="highlight">${match}</span>`
+    )
+    : userName;
+
+       
+       
+        main.innerHTML+=`
+        <div class="box">
+
+        <h5 id="proName">UserName:  ${userData.userName}</h5>
+            <h5 id="proemail">UserEmail:   ${userData.userEmail}</h5>
+  
+    <h5 id="procourse">UserCourse:   ${userData.userCourse}</h5>
+    <h5 id="prodob">UserDOB:   ${userData.userDOB}</h5>
+        <h5 id="proaddress">UserContact:   ${userData.userContact}</h5>
+    <h5 id="proaddress">UserAddress:   ${userData.userAddress}</h5>
+<BR>
+    </div>
+`
+// console.log(userData);
+
+// console.log(`Number of registered users: ${numberOfUsers}`);
+      
+    });
+    // const userData = doc.data();
+    // console.log(`Name: ${userData.userName}`);
+// })
+    </script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>

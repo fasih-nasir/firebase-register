@@ -3,13 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DashBoard</title>
+    <title>Registration Form</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Mooli&display=swap" rel="stylesheet">
-<style>
-    body{
+    <style>
+          body{
+            text-transform: capitalize !important;
         color: white;
         background-color: rgb(44, 44, 44);
         font-family: "Mooli", sans-serif;
@@ -17,7 +19,7 @@
       /* cursor:progress !important; */
       padding: 10px;
       color: white;
-      border-radius: 6px;
+      border-radius: 6px;         text-transform: capitalize !important;
       border: none;
       background-color: #383838;
       /* margin: 10px 0px; */
@@ -30,7 +32,7 @@
     /* border: 2px solid lightgrey; */
     background-color: rgba(76, 76, 77, 0.429);
 }
-input,select{     color: rgb(230, 230, 230);
+input,select{            text-transform: capitalize !important;  color: rgb(230, 230, 230);
       /* border: 3px solid rgb(45, 45, 45);;; */
       background-color:  rgb(78, 78, 78);;
       padding: 15px;
@@ -55,7 +57,7 @@ h5{
     color: rgb(224, 224, 224);
     font-weight: 200;
     text-transform: capitalize;
-    font-size: 17px;
+    font-size: 17px;         text-transform: capitalize !important;
 }
 h3{
     /* padding: 5px; */
@@ -70,177 +72,238 @@ select{
 }  .highlight {
             background-color: yellow !important;
         }
-</style>
+        .btn-dlt,.btn-edit{
+            float: right;
+            margin: 0px 4px;
+            background-color:#2C2C2C;
+        }
+ 
+            /* HTML: <div class="loader"></div> */
+/* HTML: <div class="loader"></div> */
+/* HTML: <div class="loader"></div> */
+#main{
+    /* transition: s ease-in-out; */
+}
+.loader {
+    transition: 0.3s ease-in-out;
+  /* width: 120px; */
+  height: 22px;
+  padding: 10px;
+  border-radius: 20px;
+  color: #4e4d4d;
+  border: 2px solid;
+  position: relative;
+}
+.loader::before {
+  content: "";  transition: 0.1s ease-in-out;
+  position: absolute;
+  margin: 2px;
+  inset: 0 100% 0 0;
+  border-radius: inherit;
+  background: currentColor;
+  animation: l6 2s infinite;
+}
+@keyframes l6 {
+    100% {inset:0}
+}
+    </style>
 </head>
 <body>
-    <div class="container">
-    <h3 class="text-center">Register</h3>
-    <form id="registrationForm" class="text-center">
-       
-        <input type="text" id="name" placeholder="Name" required>
-        <!-- <label for="contact">Contact Number:</label> -->
-        <input type="number" id="contact" placeholder="Contact Number"required>
-
-        <!-- <label for="course">Course:</label> -->
-        <!-- <input type="text" id="course" required> -->
-        <select name="" id="course">
+    <h3 class="text-center my-4">Registration Form Using Firebase</h3>
+    <form id="registrationForm container" class="text-center">
+        <input type="text" id="name" placeholder="Name" required class="col-3">
+        <input type="number" id="contact" placeholder="Contact Number" required class="col-3">
+        <select id="course" required class="col-3">
             <option value="">Select Course</option>
-            <option value="Web Developement">Web Developement</option>
-            <option value="App Developement">App Developement</option>
-            <option value="SAP Developement">SAP Developement</option>
+            <option value="Web Development">Web Development</option>
+            <option value="App Development">App Development</option>
+            <option value="SAP Development">SAP Development</option>
             <option value="Graphic Designing">Graphic Designing</option>
         </select>
-
-        <!-- <label for="date">Date of Birth:</label> -->
-        <input type="date" id="date" placeholder="DOB "required>
-
-        <!-- <label for="address">Address:</label> -->
-        <input type="text" id="address" placeholder="Address "required>
-
-        <!-- <label for="email">Email:</label> -->
-        <input type="email"placeholder="Email" id="email" required>
-
-        <!-- <label for="password">Password:</label> -->
-        <input type="password" id="password" placeholder="Password" required><br><br>
-
+        <input type="date" id="date" placeholder="DOB" required class="col-3">
+        <input type="text" id="address" placeholder="Address" required class="col-3">
+        <input type="email" id="email" placeholder="Email" required class="col-3">
+        <input type="password" id="password" placeholder="Password" required class="col-3"><br><br>
         <button type="button" id="regisBtn">Register</button>
-        <button type="button" id="seePro">See profile</button>
     </form>
+    <div class="d-flex col-12 justify-content-center align-items-center">
+    <p id="lo" class="text-center my-3 loader col-3 "></p>
 </div>
-<div class="container">
-    <div class="col-12 d-flex justify-content-between align-items-center">
-        <h3>User Information</h3>
-        <input type="search" id="searchInput" placeholder="Search By Name">
-    </div>
-    <div id="main" class="d-flex flex-column justify-content-around ">
-        <!-- <h5 id="proName">Name</h5>
-        <h5 id="proemail">enail</h5>
-    <h5 id="procontact">Name</h5>
-    <h5 id="procourse">Name</h5>
-    <h5 id="prodob">Name</h5>
-    <h5 id="proaddress">Name</h5> -->
+
+    <div class="container d-flex justify-content-center">
+<div id="main" class="d-flex flex-column justify-content-around col-10">
+
+    
+
 </div>
+    <!-- <button class="btn-dlt">delete</button> -->
+   <!-- <span>Name :</span> <h5></h5>
+   <span>Email :</span>  <h5></h5>
+   <span>Address:</span>  <h5></h5>
+   <span>contact number :</span> <h5></h5>
+   <span>Name :</span> <h5></h5>
+   <span>Name :</span> <h5></h5>
+   <span>Name :</span> <h5></h5> -->
 </div>
     <script type="module">
-        // Import Firebase modules (for module bundlers like Webpack or Rollup)
-// app.js
 
-// app.js
+setTimeout(() => {
+    // document.getElementById("main").innerHTML = "Wait, Content is Loading";
+ document.getElementById("lo").style.display="none"
+    
+    
+}, 2000);
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+        import { getFirestore, collection, addDoc,getDocs ,doc, deleteDoc,updateDoc} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
-import { getFirestore, collection, addDoc,getDocs  } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyB08gg8BvFPAKYcPtAIq6nyscEJek1ercg",
+            authDomain: "dashboard-97d59.firebaseapp.com",
+            projectId: "dashboard-97d59",
+            storageBucket: "dashboard-97d59.appspot.com",
+            messagingSenderId: "746131592139",
+            appId: "1:746131592139:web:45048840b428fa9a085c4e",
+            measurementId: "G-TK140TD71H"
+        };
 
-const firebaseConfig = {
-  apiKey: "AIzaSyB08gg8BvFPAKYcPtAIq6nyscEJek1ercg",
-  authDomain: "dashboard-97d59.firebaseapp.com",
-  projectId: "dashboard-97d59",
-  storageBucket: "dashboard-97d59.appspot.com",
-  messagingSenderId: "746131592139",
-  appId: "1:746131592139:web:45048840b428fa9a085c4e",
-  measurementId: "G-TK140TD71H"
-};
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const auth = getAuth(app);
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
 
-
-let studentName = document.getElementById("name");
-let contactNum = document.getElementById("contact");
-let course = document.getElementById("course");
-let dateOfBirth = document.getElementById("date");
-let address = document.getElementById("address");
-let email = document.getElementById("email");
-let password = document.getElementById("password");
-let registerBtn = document.getElementById("regisBtn");
-
-registerBtn.addEventListener("click", async () => {
+        // Register button click event
+        const registerBtn = document.getElementById("regisBtn");
+        registerBtn.addEventListener("click", async () => {
     try {
-        // Register the user with Firebase Authentication
-        const userCredential = await createUserWithEmailAndPassword(auth, email.value, password.value);
-        const user = userCredential.user;
+        // Get form values
+        const studentName = document.getElementById("name").value
+        const contactNum = document.getElementById("contact").value
+        const course = document.getElementById("course").value
+        const dateOfBirth = document.getElementById("date").value
+        const address = document.getElementById("address").value
+        const email = document.getElementById("email").value
+        const password = document.getElementById("password").value
 
-        // Add user data to Firestore
-        const docRef = await addDoc(collection(db, "users"), {
-            userName: studentName.value,
-            userDOB: dateOfBirth.value,
-            userCourse: course.value,
-            userContact: contactNum.value,
-            userEmail: email.value,
-            userAddress: address.value,
-            userPassword: password.value,
+        // Check if any field is empty
+        if (!studentName && !contactNum && !course && !dateOfBirth && !address && !email && !password) {
+            Swal.fire({
+                title: "Error",
+                text: "Please fill in all the input fields!",
+                icon: "error"
+            });
+            return; // Stop further execution if any field is empty
+        }
+
+        // Save user data to Firestore
+        await addDoc(collection(db, "users1"), {
+            userName: studentName,
+            userDOB: dateOfBirth,
+            userCourse: course,
+            userContact: contactNum,
+            userEmail: email,
+            userAddress: address,
+            userPassword: password, // Note: Storing passwords as plain text is not secure. This is just for example purposes.
         });
 
-        alert("You are registered successfully!");
+        // Show success message
+        Swal.fire({
+            title: "Registration successful!",
+            text: "You have successfully registered.",
+            icon: "success"
+        });
 
         // Clear form fields after registration
-        studentName.value = "";
-        contactNum.value = "";
-        course.value = "";
-        dateOfBirth.value = "";
-        address.value = "";
-        email.value = "";
-        password.value = "";
-    } catch (error) {
-        // console.error("Error registering user: ", error);
-        alert("Error registering: " + error.message);
+        // document.getElementById("registrationForm").reset();
+        var inp=document.querySelectorAll("input")
+        inp.forEach(element => {
+            element.value=""
+        });
+        
+    } catch (e) {
+        console.error("Error registering user: ", e.message);
+        Swal.fire({
+            title: "Error",
+            text: "Error: " + e.message,
+            icon: "error"
+        });
     }
 });
-var main=document.getElementById("main")
-
-document.getElementById("seePro").addEventListener("click",()=>{
-    main.style.opacity="1";
-    const searchInput = document.getElementById("searchInput").value.trim().toLowerCase();
-})
-const querySnapshot = await getDocs(collection(db, "users"));
-
-// for(let i=0;i<userData.le)
-// document.getElementById("seePro").addEventListener("click",()=>{
-    querySnapshot.forEach((doc) => {
-        const userData = doc.data();
-        const userName = userData.userName;
-
-
-
-
-
         
-        const numberOfUsers = querySnapshot.size; // Number of documents in the collection
-       
-        const isMatching = userData.userName.toLowerCase().includes(searchInput);
 
-// Highlight the search term in the name
-const highlightedName = isMatching
-    ? userName.replace(
-        new RegExp(searchInput, 'gi'),
-        (match) => `<span class="highlight">${match}</span>`
-    )
-    : userName;
-
+        var showvr=await getDocs(collection(db, "users1"))
+        showvr.forEach((element) => {
+            // console.log(element.id);
+            // element.addEventListener("click",)
+            
        
-       
+        var main=document.getElementById("main");
         main.innerHTML+=`
         <div class="box">
-
-        <h5 id="proName">UserName:  ${userData.userName}</h5>
-            <h5 id="proemail">UserEmail:   ${userData.userEmail}</h5>
-  
-    <h5 id="procourse">UserCourse:   ${userData.userCourse}</h5>
-    <h5 id="prodob">UserDOB:   ${userData.userDOB}</h5>
-        <h5 id="proaddress">UserContact:   ${userData.userContact}</h5>
-    <h5 id="proaddress">UserAddress:   ${userData.userAddress}</h5>
-<BR>
-    </div>
-`
-// console.log(userData);
-
-// console.log(`Number of registered users: ${numberOfUsers}`);
-      
+            <button class="btn-dlt" data-id="${element.id}">delete</button>
+              <button class="btn-edit" data-id="${element.id}">edit</button>
+          <h5>Name : ${element.data().userName}</h5>
+<h5>Email: ${element.data().userEmail}</h5>
+     <h5>Address : ${element.data().userAddress}</h5>
+    <h5>Contact :${element.data().userContact}</h5>
+  <h5>DOB :${element.data().userDOB}</h5>
+        <h5>Course :${element.data().userCourse}</h5>
+</div>
+        `
     });
-    // const userData = doc.data();
-    // console.log(`Name: ${userData.userName}`);
-// })
+
+
+
+    var dltdiv=document.querySelectorAll(".btn-dlt")
+ dltdiv.forEach((element) => {
+    
+     element.addEventListener("click",async ()=>{
+        //  console.log(element.getAttribute("data-id"));
+         await deleteDoc(doc(db, "users1",element.getAttribute("data-id")))
+      element.parentElement.remove()
+        })
+    });
+    // 
+    var dltdiv1=document.querySelectorAll(".btn-edit")
+ dltdiv1.forEach((element) => {
+    
+     element.addEventListener("click",async ()=>{
+        var abc=element.getAttribute("data-id");
+        
+        const washingtonRef = doc(db, "users1", abc);
+// console.log(element.parentElement.childNodes[4]);
+// console.log(document.querySelectorAll("h5")[0]);
+// console.log(document.querySelectorAll("h5")[0].textContent);
+
+        const newName = prompt("Enter Name",document.querySelectorAll("h5")[0].textContent); 
+        const newEmail = prompt("Enter Email",document.querySelectorAll("h5")[1].textContent)
+        const newaddress = prompt("Enter Adress",document.querySelectorAll("h5")[2].textContent)
+        const newcontactNum = prompt("Enter Num",document.querySelectorAll("h5")[3].textContent)
+        const newdateOfBirth = prompt("Enter DOB",document.querySelectorAll("h5")[4].textContent)
+        const newcourse = prompt("Enter Course",document.querySelectorAll("h5")[5].textContent)
+
+        await updateDoc(washingtonRef, {
+            userName: newName,
+                    userDOB: newdateOfBirth,
+                    userCourse: newcourse,
+                    userContact: newcontactNum,
+                    userEmail: newEmail,
+                    userAddress: newaddress,
+
+})
+Swal.fire({
+  title: "Update successful!",
+  text: "You clicked the button!",
+  icon: "success"
+});
+       location.reload()
+;
+    })
+    });
     </script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
+
+
